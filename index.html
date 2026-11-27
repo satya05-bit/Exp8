@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCA Department Portal</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Official MCA Department Portal showcasing courses, faculty, placements, projects and achievements.">
+
+    <meta name="keywords" content="MCA, MCA Department, Computer Applications, Faculty, Placements, Projects">
+
+    <meta name="author" content="Tara Prasad Tripathy">
+
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, .05);
+            backdrop-filter: blur(5px);
+        }
+
+        #datetime {
+            color: #38bdf8;
+            margin-top: 10px;
+        }
+
+        .ticker {
+            background: #06b6d4;
+            color: black;
+            padding: 8px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+        }
+
+        nav button {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            background: #8b5cf6;
+            color: white;
+            transition: 0.4s;
+        }
+
+        nav button:hover {
+            background: #06b6d4;
+            transform: scale(1.08);
+        }
+
+        .page {
+            display: none;
+            padding: 25px;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 20px;
+            background: linear-gradient(135deg,
+                    #ff6b6b,
+                    #6c63ff,
+                    #00c9a7);
+        }
+
+        .hero h2 {
+            font-size: 40px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .grid {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, .1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .2);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            transition: .4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px #38bdf8;
+        }
+
+        .gallery {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .gallery img {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .logout {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #ef4444;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>MCA Department Portal</h1>
+        <p id="datetime"></p>
+        <button onclick="logout()" class="logout">
+            Logout
+        </button>
+    </header>
+
+    <div class="ticker">
+        <marquee id="news"></marquee>
+    </div>
+
+    <nav>
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('faculty')">Faculty</button>
+        <button onclick="showPage('courses')">Courses</button>
+        <button onclick="showPage('projects')">Projects</button>
+        <button onclick="showPage('placements')">Placements</button>
+        <button onclick="showPage('achievements')">Achievements</button>
+    </nav>
+
+    <!-- HOME -->
+
+    <section id="home" class="page active">
+
+        <div class="hero">
+            <h2>Master of Computer Applications</h2>
+            <p>Empowering Future Software Engineers & IT Leaders</p>
+        </div>
+
+        <div class="stats">
+
+            <div class="card">
+                <h1 id="students">0</h1>
+                <p>Students</p>
+            </div>
+
+            <div class="card">
+                <h1 id="facultyCount">0</h1>
+                <p>Faculty</p>
+            </div>
+
+            <div class="card">
+                <h1 id="placementsCount">0</h1>
+                <p>% Placement</p>
+            </div>
+
+            <div class="card">
+                <h1 id="projectsCount">0</h1>
+                <p>Projects</p>
+            </div>
+
+        </div>
+
+        <div class="gallery">
+            <img id="slider" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1000" alt="MCA Department Activities">
+        </div>
+
+    </section>
+
+    <!-- FACULTY -->
+
+    <section id="faculty" class="page">
+
+        <h2>Faculty Members</h2>
+
+        <input type="text" placeholder="Search Faculty..." id="searchBox" onkeyup="searchFaculty()">
+
+        <div id="facultyList" class="grid"></div>
+
+    </section>
+
+    <!-- COURSES -->
+
+    <section id="courses" class="page">
+        <h2>Courses Offered</h2>
+        <div id="courseList" class="grid"></div>
+    </section>
+
+    <!-- PROJECTS -->
+
+    <section id="projects" class="page">
+        <h2>Student Projects</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>Library Management System</h3>
+                <p>HTML, CSS, JavaScript, MySQL</p>
+            </div>
+
+            <div class="card">
+                <h3>Smart Attendance System</h3>
+                <p>PHP, MySQL</p>
+            </div>
+
+            <div class="card">
+                <h3>Hospital Management System</h3>
+                <p>Java & Database</p>
+            </div>
+
+            <div class="card">
+                <h3>AI Chatbot</h3>
+                <p>Python & NLP</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- PLACEMENTS -->
+
+    <section id="placements" class="page">
+
+        <h2>Placement Dashboard</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>TCS</h3>
+                <h2>15</h2>
+                <p>Students Selected</p>
+            </div>
+
+            <div class="card">
+                <h3>Infosys</h3>
+                <h2>12</h2>
+                <p>Students Selected</p>
+            </div>
+
+            <div class="card">
+                <h3>Wipro</h3>
+                <h2>10</h2>
+                <p>Students Selected</p>
+            </div>
+
+            <div class="card">
+                <h3>Accenture</h3>
+                <h2>9</h2>
+                <p>Students Selected</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+
+    <section id="achievements" class="page">
+
+        <h2>Achievements</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                🏆 State Level Hackathon Winners
+            </div>
+
+            <div class="card">
+                🥈 National Coding Competition Runner-up
+            </div>
+
+            <div class="card">
+                🎓 95% Academic Excellence
+            </div>
+
+            <div class="card">
+                💼 95% Placement Record
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
